@@ -6,7 +6,7 @@
   <title>ChatApp Modern · Voice + Gemini AI</title>
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <style>
+    <style>
     * {
       margin: 0;
       padding: 0;
@@ -89,7 +89,9 @@
       100% { box-shadow: 0 8px 30px rgba(46, 204, 113, 0.6); }
     }
 
-    .header-info { flex: 1; }
+    .header-info {
+      flex: 1;
+    }
 
     .header-info h2 {
       font-size: 20px;
@@ -141,7 +143,7 @@
       color: #ffffff;
     }
 
-    /* ----- MESSAGE AREA ----- */
+    /* ----- MESSAGE AREA (scroll animasi) ----- */
     .messages {
       flex: 1;
       overflow-y: auto;
@@ -152,10 +154,20 @@
       scroll-behavior: smooth;
     }
 
-    .messages::-webkit-scrollbar { width: 4px; }
-    .messages::-webkit-scrollbar-track { background: transparent; }
-    .messages::-webkit-scrollbar-thumb { background: #4c5880; border-radius: 12px; }
+    .messages::-webkit-scrollbar {
+      width: 4px;
+    }
 
+    .messages::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .messages::-webkit-scrollbar-thumb {
+      background: #4c5880;
+      border-radius: 12px;
+    }
+
+    /* bubble wrapper + animasi masuk */
     .bubble {
       max-width: 82%;
       padding: 14px 18px;
@@ -167,6 +179,17 @@
       animation: messagePop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       transition: all 0.15s ease;
       position: relative;
+    }
+
+    /* Animasi fade in 11 detik untuk pesan pertama */
+    .bubble-first {
+      animation: fadeInLong 11s ease forwards;
+      opacity: 0;
+    }
+
+    @keyframes fadeInLong {
+      0% { opacity: 0; transform: scale(0.95) translateY(10px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
     }
 
     @keyframes messagePop {
@@ -200,7 +223,7 @@
       letter-spacing: 0.3px;
     }
 
-    /* ----- TYPING INDICATOR ----- */
+    /* ----- TYPING INDICATOR (animasi titik) ----- */
     .typing-indicator {
       align-self: flex-start;
       background: rgba(48, 56, 80, 0.6);
@@ -231,7 +254,76 @@
       30% { transform: translateY(-8px); opacity: 1; }
     }
 
-    /* ----- INPUT AREA ----- */
+    /* pesan suara (voice bubble) */
+    .voice-message {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 180px;
+      padding: 4px 0;
+    }
+
+    .voice-message .play-btn {
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      transition: 0.2s ease;
+      border: none;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .voice-message .play-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: scale(1.05);
+    }
+
+    .voice-message .play-btn.playing {
+      background: #4ade80;
+      color: #0b0f1a;
+    }
+
+    .voice-wave {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      height: 30px;
+      flex: 1;
+    }
+
+    .voice-wave .bar {
+      width: 5px;
+      background: rgba(255, 255, 255, 0.4);
+      border-radius: 10px;
+      height: 8px;
+      animation: wave 1.2s infinite ease-in-out alternate;
+    }
+
+    .voice-wave .bar:nth-child(2) { height: 14px; animation-delay: 0.1s; }
+    .voice-wave .bar:nth-child(3) { height: 22px; animation-delay: 0.2s; }
+    .voice-wave .bar:nth-child(4) { height: 16px; animation-delay: 0.4s; }
+    .voice-wave .bar:nth-child(5) { height: 10px; animation-delay: 0.3s; }
+
+    @keyframes wave {
+      0% { transform: scaleY(0.4); }
+      100% { transform: scaleY(1); }
+    }
+
+    .voice-duration {
+      font-size: 13px;
+      opacity: 0.7;
+      letter-spacing: 0.5px;
+      margin-left: 2px;
+    }
+
+    /* ----- INPUT AREA (dengan animasi fokus) ----- */
     .input-area {
       padding: 16px 20px 22px 20px;
       background: rgba(16, 20, 32, 0.5);
@@ -323,21 +415,40 @@
       box-shadow: 0 10px 28px rgba(46, 204, 113, 0.4);
     }
 
+    .input-area .send-btn:active {
+      transform: scale(0.95);
+    }
+
+    .input-area .send-btn i {
+      transition: 0.2s;
+    }
+
+    /* status voice recording */
     .voice-status {
       font-size: 13px;
       color: #b4bde0;
-      padding: 0 22px 12px 22px;
+      padding-left: 8px;
       display: flex;
       align-items: center;
       gap: 8px;
     }
 
-    .voice-status i { color: #ff6b6b; }
+    .voice-status i {
+      color: #ff6b6b;
+    }
 
+    /* responsive */
     @media (max-width: 540px) {
-      .chatapp { height: 95vh; border-radius: 28px; }
-      .header { padding: 18px 20px 12px 20px; }
-      .messages { padding: 16px 12px; }
+      .chatapp {
+        height: 95vh;
+        border-radius: 28px;
+      }
+      .header {
+        padding: 18px 20px 12px 20px;
+      }
+      .messages {
+        padding: 16px 12px;
+      }
     }
   </style>
 </head>
@@ -359,7 +470,7 @@
 
     <!-- MESSAGE LIST -->
     <div class="messages" id="messageContainer">
-      <div class="bubble bubble-other">
+      <div class="bubble bubble-other bubble-first" >
         Halo! Ada yang bisa saya bantu hari ini? ✨
         <span class="time">10:20</span>
       </div>
