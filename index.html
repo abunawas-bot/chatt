@@ -532,48 +532,11 @@
       }
 
       // ========== FUNGSI UTAMA ==========
-      function addMessage(text, type = 'self', isVoice = false, duration = null) {
+      function addMessage(text, type = 'self') {
         const bubble = document.createElement('div');
         bubble.className = `bubble bubble-${type}`;
+        bubble.textContent = text;
 
-        if (isVoice) {
-          // voice message bubble
-          const voiceDiv = document.createElement('div');
-          voiceDiv.className = 'voice-message';
-
-          const playBtn = document.createElement('button');
-          playBtn.className = 'play-btn';
-          playBtn.dataset.voice = type;
-          playBtn.innerHTML = '<i class="fas fa-play"></i>';
-          // voice wave
-          const wave = document.createElement('div');
-          wave.className = 'voice-wave';
-          for (let i = 0; i < 5; i++) {
-            const bar = document.createElement('span');
-            bar.className = 'bar';
-            wave.appendChild(bar);
-          }
-          const durSpan = document.createElement('span');
-          durSpan.className = 'voice-duration';
-          durSpan.textContent = duration || '0:05';
-
-          voiceDiv.appendChild(playBtn);
-          voiceDiv.appendChild(wave);
-          voiceDiv.appendChild(durSpan);
-          bubble.appendChild(voiceDiv);
-
-          // event listener untuk play (toggle)
-          playBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            toggleVoicePlay(this);
-          });
-
-        } else {
-          // teks biasa
-          bubble.textContent = text;
-        }
-
-        // timestamp
         const timeSpan = document.createElement('span');
         timeSpan.className = 'time';
         const now = new Date();
@@ -583,11 +546,10 @@
         bubble.appendChild(timeSpan);
 
         messageContainer.appendChild(bubble);
-        // scroll ke bawah
         messageContainer.scrollTop = messageContainer.scrollHeight;
         return bubble;
       }
-
+      
       // ========== VOICE PLAY TOGGLE (simulasi) ==========
       function toggleVoicePlay(btn) {
         const icon = btn.querySelector('i');
