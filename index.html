@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ChatApp Modern · Voice + Typing</title>
+  <title>ChatApp Modern · Voice + Gemini AI</title>
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
@@ -89,9 +89,7 @@
       100% { box-shadow: 0 8px 30px rgba(46, 204, 113, 0.6); }
     }
 
-    .header-info {
-      flex: 1;
-    }
+    .header-info { flex: 1; }
 
     .header-info h2 {
       font-size: 20px;
@@ -143,7 +141,7 @@
       color: #ffffff;
     }
 
-    /* ----- MESSAGE AREA (scroll animasi) ----- */
+    /* ----- MESSAGE AREA ----- */
     .messages {
       flex: 1;
       overflow-y: auto;
@@ -154,20 +152,10 @@
       scroll-behavior: smooth;
     }
 
-    .messages::-webkit-scrollbar {
-      width: 4px;
-    }
+    .messages::-webkit-scrollbar { width: 4px; }
+    .messages::-webkit-scrollbar-track { background: transparent; }
+    .messages::-webkit-scrollbar-thumb { background: #4c5880; border-radius: 12px; }
 
-    .messages::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    .messages::-webkit-scrollbar-thumb {
-      background: #4c5880;
-      border-radius: 12px;
-    }
-
-    /* bubble wrapper + animasi masuk */
     .bubble {
       max-width: 82%;
       padding: 14px 18px;
@@ -179,17 +167,6 @@
       animation: messagePop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       transition: all 0.15s ease;
       position: relative;
-    }
-
-    /* Animasi fade in 11 detik untuk pesan pertama */
-    .bubble-first {
-      animation: fadeInLong 11s ease forwards;
-      opacity: 0;
-    }
-
-    @keyframes fadeInLong {
-      0% { opacity: 0; transform: scale(0.95) translateY(10px); }
-      100% { opacity: 1; transform: scale(1) translateY(0); }
     }
 
     @keyframes messagePop {
@@ -223,7 +200,7 @@
       letter-spacing: 0.3px;
     }
 
-    /* ----- TYPING INDICATOR (animasi titik) ----- */
+    /* ----- TYPING INDICATOR ----- */
     .typing-indicator {
       align-self: flex-start;
       background: rgba(48, 56, 80, 0.6);
@@ -254,76 +231,7 @@
       30% { transform: translateY(-8px); opacity: 1; }
     }
 
-    /* pesan suara (voice bubble) */
-    .voice-message {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      min-width: 180px;
-      padding: 4px 0;
-    }
-
-    .voice-message .play-btn {
-      width: 40px;
-      height: 40px;
-      background: rgba(255, 255, 255, 0.12);
-      border-radius: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 18px;
-      cursor: pointer;
-      transition: 0.2s ease;
-      border: none;
-      backdrop-filter: blur(4px);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    }
-
-    .voice-message .play-btn:hover {
-      background: rgba(255, 255, 255, 0.25);
-      transform: scale(1.05);
-    }
-
-    .voice-message .play-btn.playing {
-      background: #4ade80;
-      color: #0b0f1a;
-    }
-
-    .voice-wave {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      height: 30px;
-      flex: 1;
-    }
-
-    .voice-wave .bar {
-      width: 5px;
-      background: rgba(255, 255, 255, 0.4);
-      border-radius: 10px;
-      height: 8px;
-      animation: wave 1.2s infinite ease-in-out alternate;
-    }
-
-    .voice-wave .bar:nth-child(2) { height: 14px; animation-delay: 0.1s; }
-    .voice-wave .bar:nth-child(3) { height: 22px; animation-delay: 0.2s; }
-    .voice-wave .bar:nth-child(4) { height: 16px; animation-delay: 0.4s; }
-    .voice-wave .bar:nth-child(5) { height: 10px; animation-delay: 0.3s; }
-
-    @keyframes wave {
-      0% { transform: scaleY(0.4); }
-      100% { transform: scaleY(1); }
-    }
-
-    .voice-duration {
-      font-size: 13px;
-      opacity: 0.7;
-      letter-spacing: 0.5px;
-      margin-left: 2px;
-    }
-
-    /* ----- INPUT AREA (dengan animasi fokus) ----- */
+    /* ----- INPUT AREA ----- */
     .input-area {
       padding: 16px 20px 22px 20px;
       background: rgba(16, 20, 32, 0.5);
@@ -415,52 +323,33 @@
       box-shadow: 0 10px 28px rgba(46, 204, 113, 0.4);
     }
 
-    .input-area .send-btn:active {
-      transform: scale(0.95);
-    }
-
-    .input-area .send-btn i {
-      transition: 0.2s;
-    }
-
-    /* status voice recording */
     .voice-status {
       font-size: 13px;
       color: #b4bde0;
-      padding-left: 8px;
+      padding: 0 22px 12px 22px;
       display: flex;
       align-items: center;
       gap: 8px;
     }
 
-    .voice-status i {
-      color: #ff6b6b;
-    }
+    .voice-status i { color: #ff6b6b; }
 
-    /* responsive */
     @media (max-width: 540px) {
-      .chatapp {
-        height: 95vh;
-        border-radius: 28px;
-      }
-      .header {
-        padding: 18px 20px 12px 20px;
-      }
-      .messages {
-        padding: 16px 12px;
-      }
+      .chatapp { height: 95vh; border-radius: 28px; }
+      .header { padding: 18px 20px 12px 20px; }
+      .messages { padding: 16px 12px; }
     }
   </style>
 </head>
 <body>
   <div class="chatapp">
 
-    <!-- HEADER GRADIEN HIJAU GELAP -->
+    <!-- HEADER -->
     <div class="header">
       <div class="avatar">A</div>
       <div class="header-info">
         <h2>Alexandra <i class="fas fa-circle"></i></h2>
-        <span>Online • 2 menit lalu</span>
+        <span>Online • Gemini Assistant</span>
       </div>
       <div class="header-actions">
         <i class="fas fa-phone-alt"></i>
@@ -470,9 +359,8 @@
 
     <!-- MESSAGE LIST -->
     <div class="messages" id="messageContainer">
-      <!-- pesan awal dengan animasi fade in 11 detik -->
-      <div class="bubble bubble-other bubble-first" id="welcomeMessage">
-        Halo! Selamat datang di ChatApp modern ✨
+      <div class="bubble bubble-other">
+        Halo! Ada yang bisa saya bantu hari ini? ✨
         <span class="time">10:20</span>
       </div>
     </div>
@@ -481,7 +369,7 @@
     <div class="input-area">
       <div class="input-wrapper" id="inputWrapper">
         <input type="text" id="messageInput" placeholder="Ketik pesan..." autofocus>
-        <button class="mic-btn" id="micButton" title="Rekam suara">
+        <button class="mic-btn" id="micButton" title="Bicara sekarang">
           <i class="fas fa-microphone"></i>
         </button>
       </div>
@@ -490,28 +378,27 @@
       </button>
     </div>
 
-    <!-- hidden status (optional) -->
-    <div id="voiceStatus" class="voice-status" style="display: none; padding: 0 22px 12px 22px;">
-      <i class="fas fa-circle"></i> Merekam...
+    <div id="voiceStatus" class="voice-status" style="display: none;">
+      <i class="fas fa-circle"></i> Mendengarkan suara Anda...
     </div>
   </div>
 
   <script>
     (function(){
       "use strict";
+
+      // MASUKKAN URL GOOGLE APPS SCRIPT ANDA DI SINI
       const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxiPZzdLV7KrBNqBBBBQZyNIkHdj9Vb0loFJddY9wJoj_BVcpj4lwS-x73IpD4-tRT1/exec";
-      // DOM refs
+
       const messageContainer = document.getElementById('messageContainer');
       const messageInput = document.getElementById('messageInput');
       const sendButton = document.getElementById('sendButton');
       const micButton = document.getElementById('micButton');
       const voiceStatus = document.getElementById('voiceStatus');
 
-      // ========== TYPING INDICATOR ==========
       let typingElement = null;
 
       function showTyping() {
-        // hapus typing jika sudah ada
         hideTyping();
         typingElement = document.createElement('div');
         typingElement.className = 'typing-indicator';
@@ -531,7 +418,6 @@
         }
       }
 
-      // ========== FUNGSI UTAMA ==========
       function addMessage(text, type = 'self') {
         const bubble = document.createElement('div');
         bubble.className = `bubble bubble-${type}`;
@@ -549,143 +435,6 @@
         messageContainer.scrollTop = messageContainer.scrollHeight;
         return bubble;
       }
-      
-      // ========== VOICE PLAY TOGGLE (simulasi) ==========
-      function toggleVoicePlay(btn) {
-        const icon = btn.querySelector('i');
-        if (btn.classList.contains('playing')) {
-          // pause / stop
-          btn.classList.remove('playing');
-          icon.className = 'fas fa-play';
-          // hentikan semua audio (simulasi)
-          stopAllAudio();
-        } else {
-          // matikan semua yang lain
-          document.querySelectorAll('.play-btn.playing').forEach(b => {
-            b.classList.remove('playing');
-            b.querySelector('i').className = 'fas fa-play';
-          });
-          // play
-          btn.classList.add('playing');
-          icon.className = 'fas fa-stop';
-          // simulasi selesai setelah 3 detik
-          if (window.voiceTimeout) clearTimeout(window.voiceTimeout);
-          window.voiceTimeout = setTimeout(() => {
-            if (btn.classList.contains('playing')) {
-              btn.classList.remove('playing');
-              btn.querySelector('i').className = 'fas fa-play';
-            }
-          }, 3000);
-        }
-      }
-
-      function stopAllAudio() {
-        if (window.voiceTimeout) {
-          clearTimeout(window.voiceTimeout);
-          window.voiceTimeout = null;
-        }
-        document.querySelectorAll('.play-btn.playing').forEach(b => {
-          b.classList.remove('playing');
-          b.querySelector('i').className = 'fas fa-play';
-        });
-      }
-
-      // ========== KIRIM PESAN TEKS ==========
-      function sendTextMessage() {
-        const text = messageInput.value.trim();
-        if (text === '') return;
-        addMessage(text, 'self', false);
-        messageInput.value = '';
-        messageInput.focus();
-
-        // TAMPILKAN TYPING INDICATOR, lalu balas
-        showTyping();
-        const delay = 1000 + Math.random() * 1200; // 1-2.2 detik
-        setTimeout(() => {
-          hideTyping();
-          const replies = ['Hai! 👋', 'Menarik!', 'ChatApp keren ya?', 'Voice juga bisa loh!', '👍', 'Suka banget!'];
-          const randomReply = replies[Math.floor(Math.random() * replies.length)];
-          addMessage(randomReply, 'other', false);
-        }, delay);
-      }
-
-      // ========== KIRIM PESAN SUARA (simulasi) ==========
-      function sendVoiceMessage(duration = '0:06') {
-        // voice dari user (self)
-        addMessage('', 'self', true, duration);
-
-        // TAMPILKAN TYPING INDICATOR sebelum balasan voice
-        showTyping();
-        const delay = 900 + Math.random() * 1000;
-        setTimeout(() => {
-          hideTyping();
-          const durations = ['0:04', '0:07', '0:09', '0:05'];
-          const randDur = durations[Math.floor(Math.random() * durations.length)];
-          addMessage('', 'other', true, randDur);
-        }, delay);
-      }
-
-      // ========== REKAM (simulasi) ==========
-      let isRecording = false;
-      let recordTimer = null;
-      let seconds = 0;
-
-      micButton.addEventListener('click', function() {
-        if (isRecording) {
-          // STOP rekaman
-          isRecording = false;
-          micButton.classList.remove('recording');
-          micButton.innerHTML = '<i class="fas fa-microphone"></i>';
-          voiceStatus.style.display = 'none';
-          if (recordTimer) {
-            clearInterval(recordTimer);
-            recordTimer = null;
-          }
-          // kirim voice message dengan durasi
-          const mins = String(Math.floor(seconds / 60)).padStart(2, '0');
-          const secs = String(seconds % 60).padStart(2, '0');
-          sendVoiceMessage(`${mins}:${secs}`);
-          seconds = 0;
-          // hapus status
-        } else {
-          // MULAI rekam
-          isRecording = true;
-          micButton.classList.add('recording');
-          micButton.innerHTML = '<i class="fas fa-stop"></i>';
-          voiceStatus.style.display = 'flex';
-          seconds = 0;
-          if (recordTimer) clearInterval(recordTimer);
-          recordTimer = setInterval(() => {
-            seconds++;
-            // update status
-            const mins = String(Math.floor(seconds / 60)).padStart(2, '0');
-            const secs = String(seconds % 60).padStart(2, '0');
-            voiceStatus.innerHTML = `<i class="fas fa-circle"></i> Merekam... ${mins}:${secs}`;
-          }, 1000);
-        }
-      });
-
-      // ========== SEND BUTTON ==========
-      sendButton.addEventListener('click', function() {
-        // jika sedang merekam, stop dulu
-        if (isRecording) {
-          micButton.click(); // stop rekaman
-          return;
-        }
-        sendTextMessage();
-      });
-
-      // Enter key
-      messageInput.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter' && !e.shiftKey) {
-          e.preventDefault();
-          if (isRecording) {
-            micButton.click();
-          } else {
-            sendTextMessage();
-          }
-        }
-      });
 
       // KIRIM KE GEMINI VIA APPS SCRIPT
       async function sendToGemini(userText) {
@@ -717,6 +466,7 @@
         messageInput.value = '';
         sendToGemini(text);
       }
+
       // FITUR SUARA KETEXT (Web Speech API)
       let recognition;
       if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
@@ -761,6 +511,7 @@
           recognition.start();
         }
       });
+
       sendButton.addEventListener('click', handleSendMessage);
       messageInput.addEventListener('keydown', function(e) {
         if (e.key === 'Enter' && !e.shiftKey) {
@@ -768,16 +519,8 @@
           handleSendMessage();
         }
       });
-      // ========== INISIAL: tambah voice listener ke tombol existing ==========
-      document.querySelectorAll('.play-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-          e.stopPropagation();
-          toggleVoicePlay(this);
-        });
-      });
-
-      console.log('🚀 ChatApp Modern + Typing Indicator + Green Header siap!');
     })();
   </script>
 </body>
 </html>
+
